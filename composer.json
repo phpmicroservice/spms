@@ -1,5 +1,5 @@
 {
-  "name": "xingshu/xsspms",
+  "name": "phpmicroservice/spms",
   "type": "project",
   "keywords": [
     "swoole",
@@ -8,7 +8,7 @@
     "soa",
     "esb"
   ],
-  "description": "兴数的spms的工具",
+  "description": "pms的spms的工具,包含数据处理等",
   "license": "MIT",
   "authors": [
     {
@@ -25,7 +25,7 @@
   },
   "autoload": {
     "psr-4": {
-      "xsspms\\": "src/"
+      "spms\\": "src/"
     }
   }
 }
