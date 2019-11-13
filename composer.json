@@ -1,0 +1,31 @@
+{
+  "name": "xingshu/xsspms",
+  "type": "project",
+  "keywords": [
+    "swoole",
+    "phalcon",
+    "microservice",
+    "soa",
+    "esb"
+  ],
+  "description": "兴数的spms的工具",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Dongasai",
+      "email": "1514582970@qq.com"
+    }
+  ],
+  "require": {
+    "phpmicroservice/pms-frame": "*"
+  },
+  "require-dev": {
+    "eaglewu/swoole-ide-helper": "dev-master@dev",
+    "phalcon/ide-stubs": "v3.4.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "xsspms\\": "src/"
+    }
+  }
+}
