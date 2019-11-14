@@ -1,12 +1,95 @@
 <?php
+
 namespace spms;
 
+use pms\bear\CounnectInterface;
+use pms\Serialize\SerializeTrait;
+
 /**
- * 数据处理 
+ * 数据处理 返回数据
  * Class Data
  * @package spms
  */
 class Data
 {
+    private $counnect;
+
+    use SerializeTrait;
+    /**
+     *
+     * Data constructor.
+     * @param CounnectInterface $counnect
+     */
+    public function __construct(CounnectInterface $counnect)
+    {
+        $this->counnect = $counnect;
+    }
+
+    /**
+     * 组装数据
+     * @param array $d
+     * @param $m
+     * @param $e
+     * @param $t
+     * @param $passing
+     * @return array
+     */
+    public static function zhuzhuang($d = [], $m, $e, $t, $passing)
+    {
+        $data = [
+            'm' => $m,
+            'd' => $d,
+            'e' => $e,
+            't' =>  $t,
+            'p'=>$passing
+        ];
+        $data['f'] = strtolower(SERVICE_NAME);
+        return $data;
+    }
+
+    /**
+     * 发送一个成功
+     * @param $m 消息
+     * @param array $d 数据
+     * @param int $t 类型/控制器
+     */
+    public function succee($d = [], $m = '成功', $t = '')
+    {
+        $data = [
+            'm' => $m,
+            'd' => $d,
+            'e' => 0,
+            't' => empty($t) ? $this->counnect->getRouterString() : $t
+        ];
+        $this->passing = $this->counnect->getData('p');
+        if ($this->passing) {
+            $data['p'] = $this->passing;
+        }
+        $data['f'] = strtolower(SERVICE_NAME);
+        return $data;
+    }
+
+    /**
+     * 发送一个错误的消息
+     * @param $m 错误消息
+     * @param array $d 错误数据
+     * @param int $e 错误代码
+     * @param int $t 类型,路由
+     */
+    public function error($m, $d = [], $e = 1, $t = '')
+    {
+        $data = [
+            'm' => $m,
+            'd' => $d,
+            'e' => $e,
+            't' => empty($t) ? $this->counnect->getRouterString() : $t
+        ];
+        $this->passing = $this->counnect->getData('p');
+        if ($this->passing) {
+            $data['p'] = $this->passing;
+        }
+        $data['f'] = strtolower(SERVICE_NAME);
+        return $data;
+    }
 
 }
