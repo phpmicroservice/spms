@@ -1,6 +1,6 @@
 {
   "name": "phpmicroservice/spms",
-  "type": "project",
+  "type": "library",
   "keywords": [
     "swoole",
     "phalcon",
