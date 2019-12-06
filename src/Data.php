@@ -13,8 +13,10 @@ use pms\Serialize\SerializeTrait;
 class Data
 {
     private $counnect;
+    private $passing;
 
     use SerializeTrait;
+
     /**
      *
      * Data constructor.
@@ -23,6 +25,7 @@ class Data
     public function __construct(CounnectInterface $counnect)
     {
         $this->counnect = $counnect;
+        $this->passing = $this->counnect->getData('p');
     }
 
     /**
@@ -34,15 +37,19 @@ class Data
      * @param $passing
      * @return array
      */
-    public static function zhuzhuang($d = [], $m, $e, $t, $passing)
+    public static function zhuzhuang($d = [], $m, $e, $t, $passing = '')
     {
         $data = [
             'm' => $m,
             'd' => $d,
             'e' => $e,
-            't' =>  $t,
-            'p'=>$passing
+            't' => $t,
+            'p' => $passing,
+            'time'=>time()
         ];
+        if ($passing) {
+            $data['p'] = $passing;
+        }
         $data['f'] = strtolower(SERVICE_NAME);
         return $data;
     }
@@ -55,17 +62,10 @@ class Data
      */
     public function succee($d = [], $m = '成功', $t = '')
     {
-        $data = [
-            'm' => $m,
-            'd' => $d,
-            'e' => 0,
-            't' => empty($t) ? $this->counnect->getRouterString() : $t
-        ];
-        $this->passing = $this->counnect->getData('p');
-        if ($this->passing) {
-            $data['p'] = $this->passing;
-        }
-        $data['f'] = strtolower(SERVICE_NAME);
+        $data =self::zhuzhuang($d,$m,0,
+            empty($t) ? $this->counnect->getRouterString() : $t,
+            $this->passing
+            );
         return $data;
     }
 
@@ -78,17 +78,11 @@ class Data
      */
     public function error($m, $d = [], $e = 1, $t = '')
     {
-        $data = [
-            'm' => $m,
-            'd' => $d,
-            'e' => $e,
-            't' => empty($t) ? $this->counnect->getRouterString() : $t
-        ];
-        $this->passing = $this->counnect->getData('p');
-        if ($this->passing) {
-            $data['p'] = $this->passing;
-        }
-        $data['f'] = strtolower(SERVICE_NAME);
+        $data =self::zhuzhuang($d,$m,$e,
+            empty($t) ? $this->counnect->getRouterString() : $t,
+            $this->passing
+        );
+        return $data;
         return $data;
     }
 
